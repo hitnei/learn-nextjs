@@ -1,26 +1,14 @@
 import React from "react";
 import Layout from "../../components/Layout";
 import Cart from "react-bootstrap/Card";
+import { getPosts } from "../../lib/post";
 
-const Posts = () => {
-  const posts = [
-    {
-      id: 1,
-      title: "Post 1",
-      body: "My post 1 body",
-    },
-    {
-      id: 2,
-      title: "Post 2",
-      body: "My post 2 body",
-    },
-  ];
-
+const Posts = (props) => {
   return (
     <div>
       <Layout>
         <h1>My Posts</h1>
-        {posts.map((post) => {
+        {props.posts.map((post) => {
           return (
             <Cart key={post.id}>
               <Cart.Body>
@@ -33,6 +21,15 @@ const Posts = () => {
       </Layout>
     </div>
   );
+};
+
+export const getStaticProps = async () => {
+  const posts = await getPosts();
+  return {
+    props: {
+      posts,
+    },
+  };
 };
 
 export default Posts;
