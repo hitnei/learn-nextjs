@@ -13,7 +13,7 @@ const Posts = (props) => {
           return (
             <Cart key={post.id} className="my-3 shadow">
               <Cart.Body>
-                <Cart.Title>{post.title}</Cart.Title>
+                <Cart.Title>{post.id} -- {post.title}</Cart.Title>
                 <Cart.Text>{post.body}</Cart.Text>
                 <Link href={`/posts/${post.id}`} passHref>
                   <Cart.Link>See more</Cart.Link>
@@ -28,7 +28,7 @@ const Posts = (props) => {
 };
 
 export const getStaticProps = async () => {
-  const posts = await getPosts();
+  const posts = await getPosts(10);
   return {
     props: {
       posts,

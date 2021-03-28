@@ -1,10 +1,22 @@
 import Link from "next/link";
 import React from "react";
-import { Card, Button } from "react-bootstrap";
+import { Card, Button, Spinner } from "react-bootstrap";
 import Layout from "../../components/Layout";
 import { getPostById, getPostIds } from "../../lib/post";
+import { useRouter } from "next/router";
 
 const Post = ({ post }) => {
+  const router = useRouter();
+  if (router.isFallback) {
+    return (
+      <Layout>
+        <Spinner animation="border" role="status" variant="dark">
+          <span className="sr-only">Loading...</span>
+        </Spinner>
+      </Layout>
+    );
+  }
+
   return (
     <Layout>
       <Card className="my-3 shadow">
@@ -21,11 +33,12 @@ const Post = ({ post }) => {
 };
 
 export const getStaticPaths = async () => {
-  const paths = await getPostIds();
+  const paths = await getPostIds(5);
 
   return {
     paths,
-    fallback: false, // any path not returned by getStaticPaths will go to 404 page
+    // fallback: false, // any path not returned by getStaticPaths will go to 404 page
+    fallback: true, // any path not returned right away by getStaticPaths will go to "template page" and wait for getStaticProps
   };
 };
 
@@ -35,6 +48,7 @@ export const getStaticProps = async ({ params }) => {
   return {
     props: {
       post,
+      revalidate: 1, // An optional amount in seconds after which a page re-generation can occur (x times per second)
     },
   };
 };
