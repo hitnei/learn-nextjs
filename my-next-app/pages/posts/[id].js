@@ -4,13 +4,19 @@ import { Card, Button, Spinner } from "react-bootstrap";
 import Layout from "../../components/Layout";
 import { getPostById, getPostIds } from "../../lib/post";
 import { useRouter } from "next/router";
+import spinnerStyles from "../../styles/Spinner.module.css";
 
 const Post = ({ post }) => {
   const router = useRouter();
   if (router.isFallback) {
     return (
       <Layout>
-        <Spinner animation="border" role="status" variant="dark">
+        <Spinner
+          className={spinnerStyles.spinnerLg}
+          animation="border"
+          role="status"
+          variant="dark"
+        >
           <span className="sr-only">Loading...</span>
         </Spinner>
       </Layout>
