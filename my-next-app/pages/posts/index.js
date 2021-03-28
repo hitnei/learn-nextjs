@@ -2,6 +2,7 @@ import React from "react";
 import Layout from "../../components/Layout";
 import Cart from "react-bootstrap/Card";
 import { getPosts } from "../../lib/post";
+import Link from "next/link";
 
 const Posts = (props) => {
   return (
@@ -10,10 +11,13 @@ const Posts = (props) => {
         <h1>My Posts</h1>
         {props.posts.map((post) => {
           return (
-            <Cart key={post.id}>
+            <Cart key={post.id} className="my-3 shadow">
               <Cart.Body>
                 <Cart.Title>{post.title}</Cart.Title>
                 <Cart.Text>{post.body}</Cart.Text>
+                <Link href={`/posts/${post.id}`} passHref>
+                  <Cart.Link>See more</Cart.Link>
+                </Link>
               </Cart.Body>
             </Cart>
           );
